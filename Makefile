@@ -16,9 +16,15 @@ ARCH=$(shell uname -m | awk '{print(tolower($$1))}')
 #
 # these are for newer version
 #
-GMT_VERSION_OPTION =
-GMT_INC = -I/usr/local/include/gmt/ -I/usr/include/gdal/  #-I$(NETCDFDIR)/include # gmt-config --cflags
-GMT_LIB = -L/usr/local/lib/ -lgmt # gmt-config --libes
+#GMT_VERSION_OPTION =
+#GMT_INC = -I/usr/local/include/gmt/ -I/usr/include/gdal/  #-I$(NETCDFDIR)/include # gmt-config --cflags
+#GMT_LIB = -L/usr/local/lib/ -lgmt # gmt-config --libes
+# instead of the GMT6 block (lines 19-21), use GMT4 as default:
+GMT_VERSION_OPTION ?= -DUSE_GMT4
+GMT_INC ?= -I$(GMT4HOME)/include/ -I$(NETCDFDIR)/include
+GMT_LIB ?= -L$(GMT4HOME)/lib -lgmt -lpsl
+NETCDF_LIB ?= -L/usr/local/lib -lnetcdf
+FTRN_LIB ?= -lgfortran
 #
 # netcdf should work with both
 #
